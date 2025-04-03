@@ -1,4 +1,7 @@
-var socket = io("localhost:3000");
+const render = 'https://web-chat-2aw0.onrender.com:443';
+const local = 'http://localhost:3000';
+
+var socket = io(render);
 
 
 socket.on('chat message', function (msg) {
