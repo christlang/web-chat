@@ -5,9 +5,9 @@
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      .form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      .form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      .form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
@@ -25,37 +25,42 @@
     </style>
   </head>
   <body>
+
     <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+
+    <div class="form">
+      <input id="m" autocomplete="off" /><button onclick="send()">Send</button>
+    </div>
+
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      $(function () {
-        var socket = io();
-        $('form').submit(function(){
-          var messageObj = {
-            message: $('#m').val()
+      const socket = io();
+      console.log('test');
+      console.log(socket);
+
+      function send() {
+          const messageObj = {
+            message: document.getElementById('m').value
           }
           socket.emit('chat message', messageObj);
-          $('#m').val('');
-          return false;
-        });
-        socket.on('chat message', function(msg){
-          var fullMessage = msg.user + ": " + msg.message;
-          var messageRow = `
-          <li class="messageRow">
-            <div class="messageField">
-              ${fullMessage}
-            </div>
-            <div class="messageTimestamp">
-              ${msg.timestamp}
-            </div>
-          </li>`
-          $('#messages').append(messageRow);
-          window.scrollTo(0, document.body.scrollHeight);
-        });
+          document.getElementById('m').value = '';
+      }
+
+      socket.on('chat message', function(msg){
+        console.log(msg);
+        const fullMessage = msg.user + ": " + msg.message;
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <div class="messageField">
+            ${fullMessage}
+          </div>
+          <div class="messageTimestamp">
+            ${msg.timestamp}
+          </div>
+        `;
+        li.classList.add('messageRow');
+        document.getElementById('messages').append(li);
+        window.scrollTo(0, document.body.scrollHeight);
       });
     </script>
   </body>
