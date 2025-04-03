@@ -1,14 +1,25 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
+var path = require('path');
+
 var io = require('socket.io')(http, {
   cors: {
-    origin: "http://localhost:8080"
+    origin: ["http://localhost:3000", "http://localhost:8080"]
   }
 });
 var port = process.env.PORT || 3000;
 
 app.get('/dashboard', function(req, res){
   res.sendFile(__dirname + '/dashboard.html');
+});
+
+app.get('/client', function(req, res){
+  res.sendFile(path.dirname(__dirname) + '/client/public/index.html');
+});
+
+app.get('/:folder/:file', function(req, res){
+  res.sendFile(path.dirname(__dirname)  + `/client/public/${req.params.folder}/${req.params.file}`);
 });
 
 io.on('connection', function(socket){
