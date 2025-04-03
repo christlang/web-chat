@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="js/socket.js"></script>
+    <script src="js/push.min.js"></script>
+    <script src="js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jquery.emojipicker.a.css">
+    <script type="text/javascript" src="js/jquery.emojis.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/jquery.emojipicker.css">
+    <script type="text/javascript" src="js/jquery.emojipicker.h-.js"></script>
+    <script src="js/chat.js"></script>
+
+    <title>hallo</title>
+
+    <style>
+        .hintergrund {
+            background-color: sandybrown;
+        }
+        .chatinput {
+            color: black;
+            background-color: beige;
+        }
+        .hidden {
+            visibility: hidden;
+        }
+        .send-button{
+            background-color:beige;
+        }
+        .zeit {
+            font-size: x-small;
+        }
+        .nachrichten {
+            height: 300px;
+            overflow: auto;
+            width: 300px;
+        }
+        .user-name {
+            background-color: beige;
+        }
+        .bild {
+            float:right;
+        }
+    </style>
+</head>
+<body class="hintergrund">
+    <div>
+        <div>
+            Name: <input id="user" class="user-name">
+        </div>
+        <div id="muster" class="">
+            <span id="messageUser">usr</span>:
+            <span id="messageBody">msg</span>
+            <div>
+                <span id="messageTimestamp" class="zeit">time</span>
+            </div>
+        </div>
+        <div>
+            <div class="bild">
+                <img
+                        width="300px"
+                        src="http://hintergrundbild.org/wallpaper/full/1/e/9/85608-beautiful-suesse-tiere-hintergrundbilder-1920x1536-xiaomi.jpg">
+            </div>
+            <div class="nachrichten">
+                <div id="messages">
+
+                </div>
+
+            </div>
+
+        </div>
+        <div>
+            <input id="message" class="chatinput">
+            <button id="myBtn" onclick="senden()" class="send-button">Send</button>
+        </div>
+
+    </div>
+
+
+<script>
+    const input = document.getElementById('message');
+    input.addEventListener("keypress", function(event) {
+        console.log(event)
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === "Enter") {
+            // Cancel the default action, if needed
+            event.preventDefault();
+            // Trigger the button element with a click
+            document.getElementById("myBtn").click();
+        }
+    });
+</script>
+
+</body>
+</html>
