@@ -1,0 +1,12 @@
+{
+  "name": "girls-day-2025-chat-server",
+  "version": "0.0.1",
+  "description": "This is a simple chatserver",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
