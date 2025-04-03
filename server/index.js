@@ -9,8 +9,8 @@ app.get('/dashboard', function(req, res){
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
-    let user = msg.user || undefined;
-    let message = msg.message;
+    let user = sanitize(msg.user) || undefined;
+    let message = sanitize(msg.message);
     let timestamp = getFormattedDate();
     console.log(timestamp + ' user: ' + user + ' send message: ' + message);
     var result = {
@@ -25,6 +25,13 @@ io.on('connection', function(socket){
 function getFormattedDate() {
     var date = new Date();
     return date.toString();
+}
+
+function sanitize(msg) {
+  if (msg) {
+    const sanitizedLt = msg.replace(/</g, '&lt;');
+    return sanitizedLt.replace(/>/g, '&gt;');
+  }
 }
 
 http.listen(port, function(){
